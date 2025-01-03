@@ -14,12 +14,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.network.Character
 import com.example.network.KTorClient
+import com.example.network.models.local.Character
+import com.example.network.models.remote.toLocalCharacter
 import com.example.rickandmortywiki.ui.theme.RickAndMortyWikiTheme
 
 class MainActivity : ComponentActivity() {

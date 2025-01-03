@@ -1,5 +1,8 @@
 package com.example.network
 
+import com.example.network.models.local.Character
+import com.example.network.models.remote.RemoteCharacter
+import com.example.network.models.remote.toLocalCharacter
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -33,22 +36,8 @@ class KTorClient {
 
     suspend fun getCharacter(id: Int):Character {
 //        .body to leverage contentNegotiation
-        return client.get("character/$id").body()
+        return client.get("character/$id")
+            .body<RemoteCharacter>() // Tell the body to parse the response to serializable class RemoteCharacter
+            .toLocalCharacter()
     }
-}
-
-@Serializable
-data class Character (
-    val id: Int,
-    val name: String,
-    val origin: Origin,
-    val status: String,
-    val species: String,
-
-) {
-    @Serializable
-    data class Origin (
-        val name: String,
-//    val url: String
-    )
 }
