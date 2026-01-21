@@ -5,6 +5,9 @@ import com.example.network.models.local.CharacterGender
 import com.example.network.models.local.CharacterStatus
 import kotlinx.serialization.Serializable
 
+/*Remote module is for raw serialization for the JSON parsing with the API response.
+* Thie has the string etc which are then converted into class based local entities
+* such as Character Gender and Character Status etc.*/
 @Serializable
 data class RemoteCharacter(
     val created: String,
@@ -32,6 +35,7 @@ data class RemoteCharacter(
     )
 }
 
+// This is essessntially a "mapping" layer to map raw string to appt data classes locally
 fun RemoteCharacter.toLocalCharacter(): Character {
     val characterGender = when(gender.lowercase()) {
         "female" -> CharacterGender.Female
