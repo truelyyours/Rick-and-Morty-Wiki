@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
+import com.example.network.ApiOperation
 import com.example.network.KTorClient
 import com.example.network.models.local.Character
 import com.example.network.models.local.CharacterStatus
@@ -79,7 +80,11 @@ fun CharacterDetailsScreen(
 //    Data points fetching
     LaunchedEffect(key1 = Unit, block = {
         delay(500)
-        character = kTorClient.getCharacter(characterId)
+        kTorClient.getCharacter(characterId)
+            .onSuccess { character = it }
+            .onFailure { exception ->
+                // todo handle error
+            }
     })
 
 //    THe whole character details is a list view i.e. recycler view in traditional sense

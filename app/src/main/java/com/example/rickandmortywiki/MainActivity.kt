@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         .padding(paddingValues)) {
                         CharacterDetailsScreen(
                             kTorClient = kTorClient,
-                            characterId = 22
+                            characterId = 55
                         )
                     }
                 }

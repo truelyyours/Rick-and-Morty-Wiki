@@ -34,10 +34,46 @@ class KTorClient {
         }
     }
 
-    suspend fun getCharacter(id: Int):Character {
+    suspend fun getCharacter(id: Int): ApiOperation<Character> {
 //        .body to leverage contentNegotiation
-        return client.get("character/$id")
-            .body<RemoteCharacter>() // Tell the body to parse the response to serializable class RemoteCharacter
-            .toLocalCharacter()
+        return safeApiCall {
+            client.get("character/$id")
+                .body<RemoteCharacter>() // Tell the body to parse the response to serializable class RemoteCharacter
+                .toLocalCharacter()
+        }
+    }
+
+    // Generica API call function
+    private inline fun <T> safeApiCall(apiCall: () -> T): ApiOperation<T> {
+        // Maybe a bit expensive for wrapping each api call in try catch?
+        // Maybe yes. Maybe then we cna handle failure explicitly by creating different viewmodel class?
+        return try {
+            ApiOperation.Success(apiCall())
+        } catch (e: Exception) {
+            // Any error is caught as API FAILURE and processed accordingly!
+            ApiOperation.Failure(e)
+        }
+    }
+}
+
+// Generic for handling success, fail, error for api calls
+sealed interface ApiOperation<T> {
+    data class Success<T> (val data: T): ApiOperation<T>
+    data class Failure<T> (val exception: Exception): ApiOperation<T>
+
+    // BELOW FUNCTIONS ARE BASICALLY CALLBACKS
+    fun onSuccess(block: (T) -> Unit): ApiOperation<T> {
+        // if "this" i.e. api operation is of type "Success" process the data.
+        if (this is Success) {
+            block(this.data)
+        }
+        return this
+    }
+
+    fun onFailure(block: (Exception) -> Unit): ApiOperation<T> {
+        if (this is Failure) {
+            block(this.exception)
+        }
+        return this
     }
 }
