@@ -2,6 +2,7 @@ package com.example.rickandmortywiki.components.character
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -51,7 +52,8 @@ sealed interface CharacterDetailsViewState {
 @Composable
 fun CharacterDetailsScreen(
     kTorClient: KTorClient,
-    characterId: Int
+    characterId: Int,
+    onEpisodeClick: (Int) -> Unit // Callback for navigation with id as argument.
 ) {
     /*Main Composable component for the character details screen*/
 
@@ -89,7 +91,7 @@ fun CharacterDetailsScreen(
 
 //    THe whole character details is a list view i.e. recycler view in traditional sense
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         contentPadding = PaddingValues(16.dp)
     ) {
         if (character == null) {
@@ -144,7 +146,7 @@ fun CharacterDetailsScreen(
                     )
                     .clip(RoundedCornerShape(12.dp))
                     .clickable {
-                        // TODO Display all episode lists
+                        onEpisodeClick(characterId)
                     }
                     .padding(vertical = 8.dp)
                     .fillMaxWidth()
