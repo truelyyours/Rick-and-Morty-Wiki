@@ -81,7 +81,6 @@ fun CharacterDetailsScreen(
 
 //    Data points fetching
     LaunchedEffect(key1 = Unit, block = {
-        delay(500)
         kTorClient.getCharacter(characterId)
             .onSuccess { character = it }
             .onFailure { exception ->
