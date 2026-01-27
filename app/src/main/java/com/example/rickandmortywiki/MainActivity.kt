@@ -33,11 +33,16 @@ import com.example.rickandmortywiki.components.character.CharacterEpisodeScreen
 import com.example.rickandmortywiki.components.character.CharacterStatusComponent
 import com.example.rickandmortywiki.ui.theme.RickAndMortyWikiTheme
 import com.example.rickandmortywiki.ui.theme.RickPrimary
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.Console
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val kTorClient = KTorClient()
+    @Inject
+    lateinit var kTorClient: KTorClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +57,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
                         composable("character_details") { CharacterDetailsScreen(
                             kTorClient = kTorClient,
-                            characterId = 114
+                            characterId = 2
                         ) {
                             navController.navigate("character_episodes/${it}")
                         }

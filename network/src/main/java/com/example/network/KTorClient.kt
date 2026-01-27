@@ -20,6 +20,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 class KTorClient {
+    /*One of the major issue is that this is not singleton so we should always have DI and it's own module*/
     private val baseUrl = "https://rickandmortyapi.com/api/"
 
     private val client = HttpClient(OkHttp) {
