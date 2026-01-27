@@ -1,4 +1,4 @@
-package com.example.rickandmortywiki.components.character
+package com.example.rickandmortywiki.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
