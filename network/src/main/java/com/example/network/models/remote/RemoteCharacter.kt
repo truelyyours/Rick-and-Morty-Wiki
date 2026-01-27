@@ -61,6 +61,7 @@ fun RemoteCharacter.toLocalCharacter(): Character {
         origin = Character.Origin(origin.name, origin.url),
         species = species,
         status = characterStatus,
-        type = type
+        type = type,
+        episodeIds = episode.map { it.split("/").last().toInt() }
     )
 }

@@ -12,7 +12,8 @@ data class Character(
     val origin: Origin,
     val species: String,
     val status: CharacterStatus,
-    val type: String
+    val type: String,
+    val episodeIds: List<Int>
     ) {
     data class Location(
         val name: String,
