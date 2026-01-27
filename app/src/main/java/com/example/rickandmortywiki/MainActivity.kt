@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
                         composable("character_details") { CharacterDetailsScreen(
                             kTorClient = kTorClient,
-                            characterId = 54
+                            characterId = 2
                         ) {
                             navController.navigate("character_episodes/${it}")
                         }
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                                 NavType.IntType})) { backStackEntry ->
                             val characterId = backStackEntry.arguments?.getInt("characterId") ?: -1
                             // Handle the characterId as needed
-                            CharacterEpisodeScreen(characterId)
+                            CharacterEpisodeScreen(characterId, kTorClient)
                         }
                     }
                 }

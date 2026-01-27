@@ -1,8 +1,11 @@
 package com.example.network
 
 import com.example.network.models.local.Character
+import com.example.network.models.local.Episode
 import com.example.network.models.remote.RemoteCharacter
+import com.example.network.models.remote.RemoteEpisode
 import com.example.network.models.remote.toLocalCharacter
+import com.example.network.models.remote.toLocalEpisode
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -44,6 +47,15 @@ class KTorClient {
                 .body<RemoteCharacter>() // Tell the body to parse the response to serializable class RemoteCharacter
                 .toLocalCharacter()
                 .also { characterCache[id] = it }
+        }
+    }
+
+    suspend fun getEpisodes(episodeIds: List<Int>): ApiOperation<List<Episode>> {
+        val idsCommaSeparated = episodeIds.joinToString(separator = ",")
+        return safeApiCall {
+            client.get("episode/$idsCommaSeparated")
+                .body<List<RemoteEpisode>>() // Tell the body to parse the response to serializable class RemoteCharacter
+                .map { it.toLocalEpisode() }
         }
     }
 

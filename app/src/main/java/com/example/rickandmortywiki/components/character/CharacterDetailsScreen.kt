@@ -35,8 +35,10 @@ import com.example.network.ApiOperation
 import com.example.network.KTorClient
 import com.example.network.models.local.Character
 import com.example.network.models.local.CharacterStatus
+import com.example.rickandmortywiki.components.common.CharacterImage
 import com.example.rickandmortywiki.components.common.DataPoint
 import com.example.rickandmortywiki.components.common.DataPointComponent
+import com.example.rickandmortywiki.components.common.LoadingState
 import com.example.rickandmortywiki.ui.theme.RickAction
 import kotlinx.coroutines.delay
 
@@ -111,13 +113,7 @@ fun CharacterDetailsScreen(
         // Image
         item {
             // SubCompose instead of Just AsyncImage so we get loading, error callbacks in declaration itself wo extra state variables.
-            SubcomposeAsyncImage (
-                model = character!!.imageUrl,
-                contentDescription = "Character Image",
-                modifier = Modifier.fillMaxWidth().aspectRatio(1f)
-                    .clip(RoundedCornerShape(12.dp)),
-                loading = { LoadingState() }
-            )
+            CharacterImage(character!!.imageUrl)
         }
 
 
@@ -170,11 +166,3 @@ fun CharacterDetailNamePlateComponent(name: String, status: CharacterStatus) {
     }
 }
 
-@Composable
-fun LoadingState() {
-    CircularProgressIndicator(
-        modifier = Modifier.fillMaxSize()
-            .padding(128.dp),
-        color = RickAction
-    )
-}
