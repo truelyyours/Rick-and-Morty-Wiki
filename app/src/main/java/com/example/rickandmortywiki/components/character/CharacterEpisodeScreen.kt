@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -69,7 +70,7 @@ fun CharacterEpisodeScreen(characterId: Int, kTorClient: KTorClient) {
 fun MainScreen(character: Character, episodes: List<Episode>) {
     val episodeBySeasonMap =episodes.groupBy { it.seasonNumber }
 
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+    LazyColumn(contentPadding = PaddingValues(16.dp), modifier = Modifier.fillMaxSize()) {
         item { CharacterNameComponent(character.name) }
         item { Spacer(Modifier.height(8.dp)) }
 

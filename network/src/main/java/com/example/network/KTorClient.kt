@@ -50,12 +50,24 @@ class KTorClient {
         }
     }
 
-    suspend fun getEpisodes(episodeIds: List<Int>): ApiOperation<List<Episode>> {
-        val idsCommaSeparated = episodeIds.joinToString(separator = ",")
+    suspend fun getEpisode(episodeId: Int): ApiOperation<Episode> {
         return safeApiCall {
-            client.get("episode/$idsCommaSeparated")
-                .body<List<RemoteEpisode>>() // Tell the body to parse the response to serializable class RemoteCharacter
-                .map { it.toLocalEpisode() }
+            client.get("episode/$episodeId")
+                .body<RemoteEpisode>()
+                .toLocalEpisode()
+        }
+    }
+
+    suspend fun getEpisodes(episodeIds: List<Int>): ApiOperation<List<Episode>> {
+        return if (episodeIds.size == 1) {
+            getEpisode(episodeIds[0]).mapSuccess { listOf(it) }
+        } else {
+            val idsCommaSeparated = episodeIds.joinToString(separator = ",")
+            return safeApiCall {
+                client.get("episode/$idsCommaSeparated")
+                    .body<List<RemoteEpisode>>() // Tell the body to parse the response to serializable class RemoteCharacter
+                    .map { it.toLocalEpisode() }
+            }
         }
     }
 
@@ -76,6 +88,15 @@ class KTorClient {
 sealed interface ApiOperation<T> {
     data class Success<T> (val data: T): ApiOperation<T>
     data class Failure<T> (val exception: Exception): ApiOperation<T>
+
+    // Basically run the transform function on T and return R.
+    // Functional programming best
+    fun <R> mapSuccess(transform: (T) -> R): ApiOperation<R> {
+        return when (this) {
+            is Success -> Success(transform(this.data))
+            is Failure -> Failure(this.exception)
+        }
+    }
 
     // BELOW FUNCTIONS ARE BASICALLY CALLBACKS
     fun onSuccess(block: (T) -> Unit): ApiOperation<T> {

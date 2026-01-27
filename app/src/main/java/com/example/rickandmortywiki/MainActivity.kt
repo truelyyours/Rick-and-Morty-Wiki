@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
                         composable("character_details") { CharacterDetailsScreen(
                             kTorClient = kTorClient,
-                            characterId = 2
+                            characterId = 114
                         ) {
                             navController.navigate("character_episodes/${it}")
                         }
