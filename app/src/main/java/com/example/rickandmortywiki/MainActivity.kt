@@ -39,11 +39,12 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
                     NavHost(navController = navController, startDestination = "character_details",
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
-                        composable("character_details") { CharacterDetailsScreen(
-                            characterId = 2
-                        ) {
-                            navController.navigate("character_episodes/${it}")
-                        }
+                        composable("character_details") {
+                            CharacterDetailsScreen(
+                                characterId = 20
+                            ) {
+                                navController.navigate("character_episodes/${it}")
+                            }
                         }
                         composable("character_episodes/{characterId}",
                             arguments = listOf(navArgument("characterId") {type =

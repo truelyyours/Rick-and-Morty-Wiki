@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,6 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.network.KTorClient
 import com.example.network.models.local.Character
 import com.example.network.models.local.CharacterStatus
+import com.example.rickandmortywiki.components.character.CharacterGridItem
+import com.example.rickandmortywiki.components.character.CharacterListItem
 import com.example.rickandmortywiki.components.character.CharacterStatusComponent
 import com.example.rickandmortywiki.components.common.CharacterImage
 import com.example.rickandmortywiki.components.common.DataPoint
@@ -84,7 +88,20 @@ fun CharacterDetailsScreen(
             is CharacterDetailsViewState.Success -> {
                 val character = viewState.character
                 val characterDataPoints = viewState.characterDataPoints
+                item {
+                    Row (modifier = Modifier.fillMaxWidth()) {
+                        CharacterGridItem(modifier = Modifier.weight(1f), character = character) { }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        CharacterGridItem(modifier = Modifier.weight(1f), character = character) { }
+                    }
+                }
 
+                items(10) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CharacterListItem(character = character, characterDataPoints = characterDataPoints) { }
+                }
+
+                /*
                 // Name plate
                 item {
                     CharacterDetailNamePlateComponent(
@@ -135,6 +152,7 @@ fun CharacterDetailsScreen(
 
                 // Indicating end
                 item { Spacer(modifier = Modifier.height(32.dp)) }
+                */
             }
         }
 
