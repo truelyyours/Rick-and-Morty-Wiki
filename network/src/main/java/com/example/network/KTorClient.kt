@@ -1,10 +1,13 @@
 package com.example.network
 
 import com.example.network.models.local.Character
+import com.example.network.models.local.CharacterPage
 import com.example.network.models.local.Episode
 import com.example.network.models.remote.RemoteCharacter
+import com.example.network.models.remote.RemoteCharacterPage
 import com.example.network.models.remote.RemoteEpisode
 import com.example.network.models.remote.toLocalCharacter
+import com.example.network.models.remote.toLocalCharacterPage
 import com.example.network.models.remote.toLocalEpisode
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -48,6 +51,14 @@ class KTorClient {
                 .body<RemoteCharacter>() // Tell the body to parse the response to serializable class RemoteCharacter
                 .toLocalCharacter()
                 .also { characterCache[id] = it }
+        }
+    }
+
+    suspend fun getCharacterByPage(pageNumber: Int) : ApiOperation<CharacterPage> {
+        return safeApiCall {
+            client.get("character/?page=$pageNumber")
+                .body<RemoteCharacterPage>()
+                .toLocalCharacterPage()
         }
     }
 

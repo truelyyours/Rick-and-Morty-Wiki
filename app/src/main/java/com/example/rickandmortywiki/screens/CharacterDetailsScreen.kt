@@ -88,20 +88,7 @@ fun CharacterDetailsScreen(
             is CharacterDetailsViewState.Success -> {
                 val character = viewState.character
                 val characterDataPoints = viewState.characterDataPoints
-                item {
-                    Row (modifier = Modifier.fillMaxWidth()) {
-                        CharacterGridItem(modifier = Modifier.weight(1f), character = character) { }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        CharacterGridItem(modifier = Modifier.weight(1f), character = character) { }
-                    }
-                }
 
-                items(10) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    CharacterListItem(character = character, characterDataPoints = characterDataPoints) { }
-                }
-
-                /*
                 // Name plate
                 item {
                     CharacterDetailNamePlateComponent(
@@ -152,7 +139,6 @@ fun CharacterDetailsScreen(
 
                 // Indicating end
                 item { Spacer(modifier = Modifier.height(32.dp)) }
-                */
             }
         }
 
@@ -167,6 +153,7 @@ fun CharacterDetailNamePlateComponent(name: String, status: CharacterStatus) {
         CharacterStatusComponent(status)
         Text(text = name,
             fontSize = 42.sp,
+            lineHeight = 42.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             color = RickAction

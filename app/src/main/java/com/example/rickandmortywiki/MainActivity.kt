@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import com.example.network.KTorClient
 import com.example.rickandmortywiki.screens.CharacterDetailsScreen
 import com.example.rickandmortywiki.screens.CharacterEpisodeScreen
+import com.example.rickandmortywiki.screens.HomeScreen
 import com.example.rickandmortywiki.ui.theme.RickAndMortyWikiTheme
 import com.example.rickandmortywiki.ui.theme.RickPrimary
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +38,13 @@ class MainActivity : ComponentActivity() {
 
             RickAndMortyWikiTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
-                    NavHost(navController = navController, startDestination = "character_details",
+                    NavHost(navController = navController, startDestination = "home_screen",
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
+                        composable(route = "home_screen") {
+                            HomeScreen {
+                                navController.navigate("character_details")
+                            }
+                        }
                         composable("character_details") {
                             CharacterDetailsScreen(
                                 characterId = 20

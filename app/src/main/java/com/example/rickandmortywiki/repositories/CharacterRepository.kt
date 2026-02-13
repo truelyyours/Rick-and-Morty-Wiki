@@ -3,6 +3,7 @@ package com.example.rickandmortywiki.repositories
 import com.example.network.ApiOperation
 import com.example.network.KTorClient
 import com.example.network.models.local.Character
+import com.example.network.models.local.CharacterPage
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(private val kTorClient: KTorClient) {
@@ -14,6 +15,10 @@ class CharacterRepository @Inject constructor(private val kTorClient: KTorClient
 
     suspend fun fetchCharacter(characterId: Int): ApiOperation<Character> {
         return kTorClient.getCharacter(characterId)
+    }
+
+    suspend fun fetchCharacterPage(page: Int): ApiOperation<CharacterPage> {
+        return kTorClient.getCharacterByPage(page)
     }
 
 }
