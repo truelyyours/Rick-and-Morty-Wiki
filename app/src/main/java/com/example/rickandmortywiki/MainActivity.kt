@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "character_details",
                         modifier = Modifier.background(color = RickPrimary).padding(paddingValues)) {
                         composable("character_details") { CharacterDetailsScreen(
-                            kTorClient = kTorClient,
                             characterId = 2
                         ) {
                             navController.navigate("character_episodes/${it}")
